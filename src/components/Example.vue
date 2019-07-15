@@ -1,9 +1,9 @@
 <template>
-    <selection id="main">
+    <div id="main">
         <div class="conteiner">
             <h1>Webpack message: h</h1>
         </div>
-    </selection>
+    </div>
 </template>
 
 <style lang="scss" scoped>

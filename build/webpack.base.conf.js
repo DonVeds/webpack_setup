@@ -16,17 +16,23 @@ module.exports = {
         paths: PATHS
     },
     entry: {
-        app: PATHS.src
+        app: PATHS.src,
+        example: `${PATHS.src}/example.js`
     },
     output: {
-        filename: `${PATHS.assets}js/[name].js`,
+        filename: `${PATHS.assets}js/[name].[hash].js`,
         path: PATHS.dist,
         publicPath: "/"
     },
     optimization: {
         splitChunks: {
-            cacheGroup: {
-                
+            cacheGroups: {
+                vendor: {
+                    name: "vendors",
+                    test: /node_modules/,
+                    chunks: "all",
+                    enforce: true
+                }
             }
         }
     },
@@ -42,7 +48,7 @@ module.exports = {
                 loader: "vue-loader",
                 options: {
                     loader: {
-                        scss: 'vue-style-loader!cssloader!sass-loader'
+                        scss: "vue-style-loader!cssloader!sass-loader"
                     }
                 }
             },
@@ -74,23 +80,35 @@ module.exports = {
                         options: { sourceMap: true }
                     }
                 ]
+            }, {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: { sourceMap: true }
+                    }, {
+                        loader: 'postcss-loader',
+                        options: { sourceMap: true, config: { path: `./postcss.config.js` } }
+                    }
+                ]
             }
         ]
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.js'
+            vue$: "vue/dist/vue.js"
         }
     },
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            filename: `${PATHS.assets}css/[name].css`
+            filename: `${PATHS.assets}css/[name].[hash].css`
         }),
         new HtmlWebpackPlugin({
-            hash: false,
             template: `${PATHS.src}/index.html`,
-            filename: "./index.html"
+            filename: "./index.html",
         }),
         new CopyWebpackPlugin([
             { from: `${PATHS.src}/img`, to: `${PATHS.assets}img/` },
