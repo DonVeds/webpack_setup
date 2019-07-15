@@ -23,6 +23,13 @@ module.exports = {
         path: PATHS.dist,
         publicPath: "/"
     },
+    optimization: {
+        splitChunks: {
+            cacheGroup: {
+                
+            }
+        }
+    },
     module: {
         rules: [
             {
