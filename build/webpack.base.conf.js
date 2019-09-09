@@ -49,7 +49,7 @@ module.exports = {
                 loader: "vue-loader",
                 options: {
                     loader: {
-                        scss: "vue-style-loader!cssloader!sass-loader"
+                        scss: "vue-style-loader!cssloader!sass-loader" 
                     }
                 }
             },
@@ -73,7 +73,7 @@ module.exports = {
                         loader: "postcss-loader",
                         options: {
                             sourceMap: true,
-                            config: { path: "src/js/postcss.config.js" }
+                            config: { `${PATHS.src}/js/postcss.config.js` }
                         }
                     },
                     {
